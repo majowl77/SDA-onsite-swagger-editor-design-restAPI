@@ -28,7 +28,8 @@ tags:
     description: Operations about user
   - name: categories
     description: Operations about categories
-
+  - name: auth
+    description: Operations about auth
 
 paths:
   # products endpoints
@@ -44,16 +45,19 @@ paths:
           name: page
           schema:
             type: number
+            description: Number of page
           required: false
         - in: query
           name: limit
           schema:
             type: number
+            description: Number of items per page
           required: false
         - in: query
           name: sortByPrice
           schema:
             type: string
+            description: Sort the products by price
             enum:
               - "lowToHigh"
               - "highToLow"
@@ -99,6 +103,7 @@ paths:
         - in: path
           name: productID
           required: true
+          description: the product id
           schema:
             type: string
 
@@ -124,6 +129,7 @@ paths:
       parameters:
         - in: path
           name: productID
+          description: the product id
           required: true
           schema:
             type: string
@@ -146,6 +152,7 @@ paths:
       parameters:
         - in: path
           name: productID
+          description: the product id
           required: true
           schema:
             type: string
@@ -176,6 +183,7 @@ paths:
         - in: path
           name: searchkeyword
           required: true
+          description: search keyword by the user 
           schema:
             type: string
       responses:
@@ -236,6 +244,7 @@ paths:
       parameters:
         - in: path
           name: userID
+          description: the user id
           required: true
           schema:
             type: string
@@ -261,6 +270,7 @@ paths:
       parameters:
         - in: path
           name: userID
+          description: the user id
           required: true
           schema:
             type: string
@@ -282,6 +292,7 @@ paths:
       parameters:
         - in: path
           name: userID
+          description: the user id
           required: true
           schema:
             type: string
@@ -303,10 +314,10 @@ paths:
           description: Invalid ID supplied
         "404":
           description: user not found
-  /users/login:
+  /auth/login:
     post:
       tags:
-        - users
+        - auth
       summary: login a user
       requestBody:
         content:
@@ -326,10 +337,10 @@ paths:
           description: unauthorized user
         "500":
           description: server error
-  /users/logout:
+  /auth/logout:
     post:
       tags:
-        - users
+        - auth
       summary: logout a user
       responses:
         "201":
@@ -381,6 +392,7 @@ paths:
       parameters:
         - in: path
           name: categoryID
+          description: the category id
           required: true
           schema:
             type: string
@@ -406,6 +418,7 @@ paths:
       parameters:
         - in: path
           name: categoryID
+          description: the category id
           required: true
           schema:
             type: string
@@ -426,6 +439,7 @@ paths:
       parameters:
         - in: path
           name: categoryID
+          description: the category id
           required: true
           schema:
             type: string
@@ -494,6 +508,7 @@ paths:
       parameters:
         - in: path
           name: orderID
+          description: the order id
           required: true
           schema:
             type: string
@@ -519,6 +534,7 @@ paths:
       parameters:
         - in: path
           name: orderID
+          description: the order id 
           required: true
           schema:
             type: string
@@ -539,6 +555,7 @@ paths:
       parameters:
         - in: path
           name: orderID
+          description: the order id
           required: true
           schema:
             type: string
@@ -608,6 +625,7 @@ components:
         - name
         - image
         - price
+        - categories
       examples:
         - id: 1
           name: GreenPlant
@@ -631,6 +649,11 @@ components:
         purchasedAt:
           type: string
           format: date-time
+      required:
+        - productList
+        - userId
+        - purchasedAt
+
 
     Category:
       type: object
@@ -642,6 +665,8 @@ components:
         name:
           type: string
           examples: [Accessories]
+        required:
+        - name
 
     User:
       type: object
