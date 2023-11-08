@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Majedah Matar - GreenPlants 
+  title: Majedah Matar - GreenPlants
   description: |-
     Welcome to GreenPlant – Your One- Stop Destination for Interior Plants and Decor. 
 
@@ -12,13 +12,13 @@ info:
      - Eco-friendly and sustainable practices in our products.
 
   version: 1.0.11
-  contact: 
+  contact:
     email: ijood77@gmail.com
 
-  
 servers:
   - url: http://localhost:3000
   - url: http://localhost:3001
+
 tags:
   - name: products
     description: Everything about GreenPlant products
@@ -28,417 +28,564 @@ tags:
     description: Operations about user
   - name: categories
     description: Operations about categories
+
+
 paths:
+  # products endpoints
   /products:
     get:
       tags:
         - products
       summary: retrieving  a list of all products
-      description: returning all the products 
+      description: returning all the products
       operationId: listProducts
-      parameters: 
+      parameters:
         - in: query
           name: page
-          schema: 
-            type: number 
+          schema:
+            type: number
           required: false
         - in: query
           name: limit
-          schema: 
-            type: number 
+          schema:
+            type: number
           required: false
         - in: query
           name: sortByPrice
-          schema: 
-            type: string 
+          schema:
+            type: string
             enum:
-              - 'lowToHigh'
-              - 'highToLow'
+              - "lowToHigh"
+              - "highToLow"
           required: false
-                   
+
       responses:
-        '200':
-          description: Successful operation
+        "200":
+          description: Successful operation, list of all product are returen
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/Product'
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
     post:
       tags:
         - products
       summary: create a product
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/Product'              
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
       responses:
-        '201':
+        "201":
           description: create a product
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/Product'
-        '500':
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
           description: server error
-  /products/{id}: 
-    get: 
-      tags: 
-        - products 
-      summary: retrieving product by id 
-      description: displying product details by product id 
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: retrieving product by id
+      description: displying product details by product id
       operationId: getProductId
-      parameters: 
-        - in: path 
+      parameters:
+        - in: path
           name: productID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: list product details 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/Product'
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: display product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Product not found
-    delete: 
-      tags: 
-        - products 
-      summary: delete product by id 
-      description: delete a single product by its id 
+    delete:
+      tags:
+        - products
+      summary: delete product by id
+      description: delete a single product by its id
       operationId: deleteProductId
-      parameters: 
-        - in: path 
+      parameters:
+        - in: path
           name: productID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: delete product by id 
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: delete product by id
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Product not found
-    put: 
-      tags: 
-        - products 
-      summary: update product by id 
-      description: update product details by product id 
+    put:
+      tags:
+        - products
+      summary: update product by id
+      description: update product details by product id
       operationId: updateProductId
-      parameters: 
-        - in: path 
+      parameters:
+        - in: path
           name: productID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/Product'
-      responses: 
-        '200': 
-          description: update product details 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/Product'
-        '500': 
-          description: server error 
-        '400':
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: update product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Product not found
   /products/searchKeyword:
     get:
-      tags: 
+      tags:
         - products
       summary: search products
-      parameters: 
-        - in: path 
+      parameters:
+        - in: path
           name: searchkeyword
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-      responses: 
-        '200': 
-          description: search products by name 
-          content: 
-            application/json: 
-              schema: 
-                type: array 
-                items: 
-                  $ref: '#/components/schemas/Product'                
-        '500': 
-          description: server error 
-        '404':
+      responses:
+        "200":
+          description: search products by name
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: server error
+        "404":
           description: Products are not found
 
-
-
-
-
+  # Users endpoints
   /users:
     get:
       tags:
         - users
       summary: retrieving  a list of all users
-      description: returning all the users            
       responses:
-        '200':
-          description: Successful operation
+        "200":
+          description: Successful operation, return all the users
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/User'
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
     post:
       tags:
         - users
       summary: create a user
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/User'              
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
-        '201':
+        "201":
           description: create a user
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/User'
-        '500':
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
           description: server error
-  /users/{id}: 
-    get: 
-      tags: 
-        - users 
-      summary: retrieving user by id 
-      description: displying user details by user id 
-      parameters: 
-        - in: path 
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: retrieving user by id
+      description: displying user details by user id
+      parameters:
+        - in: path
           name: userID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: find user by id 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/User'
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: find user by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: user not found
-    delete: 
-      tags: 
-        - users 
-      summary: delete user by id 
-      description: delete a single user by its id 
-      parameters: 
-        - in: path 
+    delete:
+      tags:
+        - users
+      summary: delete user by id
+      description: delete a single user by its id
+      parameters:
+        - in: path
           name: userID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: delete user by id 
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: delete user by id
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: user not found
-    put: 
-      tags: 
-        - users 
-      summary: update user by id 
-      description: update user details by user id 
-      parameters: 
-        - in: path 
+    put:
+      tags:
+        - users
+      summary: update user by id
+      description: update user details by user id
+      parameters:
+        - in: path
           name: userID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/User'
-      responses: 
-        '200': 
-          description: update user details 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/User'
-        '500': 
-          description: server error 
-        '400':
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: update user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: user not found
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: login a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        "201":
+          description: user authenticated successfully
+        "401":
+          description: unauthorized user
+        "500":
+          description: server error
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: logout a user
+      responses:
+        "201":
+          description: user logged out successfully
+        "500":
+          description: server error
+  
+  # Categories endpoints
   /categories:
     get:
       tags:
         - categories
       summary: retrieving  a list of all categories
-      description: returning all the categories            
+      description: returning all the categories
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/Category'
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
     post:
       tags:
         - categories
       summary: create a category
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/Category'              
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
       responses:
-        '201':
+        "201":
           description: create a category
           content:
             application/json:
               schema:
-                type: array 
-                items: 
-                     $ref: '#/components/schemas/Category'
-        '500':
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+        "500":
           description: server error
-  /categories/{id}: 
-    get: 
-      tags: 
-        - categories 
-      summary: retrieving category by id 
-      parameters: 
-        - in: path 
+  /categories/{id}:
+    get:
+      tags:
+        - categories
+      summary: retrieving category by id
+      parameters:
+        - in: path
           name: categoryID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: find category by id 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/Category'
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: find category by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: category not found
-    delete: 
-      tags: 
-        - categories 
-      summary: delete category by id 
-      description: delete a single category by its id 
-      parameters: 
-        - in: path 
+    delete:
+      tags:
+        - categories
+      summary: delete category by id
+      description: delete a single category by its id
+      parameters:
+        - in: path
           name: categoryID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-          
-      responses: 
-        '200': 
-          description: delete category by id 
-        '500': 
-          description: server error 
-        '400':
+
+      responses:
+        "200":
+          description: delete category by id
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: category not found
-    put: 
-      tags: 
-        - categories 
-      summary: update category by id 
-      parameters: 
-        - in: path 
+    put:
+      tags:
+        - categories
+      summary: update category by id
+      parameters:
+        - in: path
           name: categoryID
-          required: true 
-          schema: 
+          required: true
+          schema:
             type: string
-      requestBody: 
-        content: 
-          application/json: 
-            schema: 
-              $ref: '#/components/schemas/Category'
-      responses: 
-        '200': 
-          description: update category details 
-          content: 
-            application/json: 
-              schema: 
-                $ref: '#/components/schemas/Category'
-        '500': 
-          description: server error 
-        '400':
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        "200":
+          description: update category details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "500":
+          description: server error
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: category not found
+  
+  # Orders endpoints
+  /orders:
+    get:
+      tags:
+        - orders
+      summary: retrieving  a list of all orders
+      description: returning all the orders
+      responses:
+        "200":
+          description: Successful operation , returen a list of order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "500":
+          description: server error
+    post:
+      tags:
+        - orders
+      summary: create a order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        "201":
+          description: order is created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "500":
+          description: server error
+  /orders/{id}:
+    get:
+      tags:
+        - orders
+      summary: retrieving order by id
+      parameters:
+        - in: path
+          name: orderID
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: find order by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "500":
+          description: server error
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: order not found
+    delete:
+      tags:
+        - orders
+      summary: delete order by id
+      description: delete a single order by its id
+      parameters:
+        - in: path
+          name: orderID
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: delete order by id
+        "500":
+          description: server error
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: order not found
+    put:
+      tags:
+        - orders
+      summary: update order by id
+      parameters:
+        - in: path
+          name: orderID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        "200":
+          description: update order details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "500":
+          description: server error
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: order not found
 
 components:
   schemas:
     Product:
       type: object
-      properties: 
-        id: 
+      properties:
+        id:
           type: integer
           format: int64
-          examples: [10]
+          example: 10
         name:
           type: string
-          examples: [Emerald]
-        subName: 
+          example: Emerald
+        subName:
           type: string
-          examples: [greenPlant]
-        image: 
-          type: string 
-          examples: [public/images/productImagethree.png]
-        description: 
+          example: greenPlant
+        image:
           type: string
-          examples: [greenPlant]
+          example: public/images/productImagethree.png
+        description:
+          type: string
+          example: greenPlant
         categories:
-          type: array 
+          type: array
           items:
-            $ref: '#/components/schemas/Category'
+            $ref: "#/components/schemas/Category"
         variants:
           type: array
           items:
@@ -448,20 +595,20 @@ components:
           type: array
           items:
             type: string
-          examples: ["Mini", "Medium", "Grand"]  
-        price: 
+          examples: ["Mini", "Medium", "Grand"]
+        price:
           type: integer
           format: int64
-          examples: [10]         
-        quantity: 
+          example: 10
+        quantity:
           type: integer
           format: int64
-          examples: [10]        
+          examples: 7
       required:
         - name
         - image
         - price
-      examples: 
+      examples:
         - id: 1
           name: GreenPlant
           subName: white Accessories
@@ -472,15 +619,15 @@ components:
         id:
           type: integer
           format: int64
-          examples: [10]
-        productId:
-          type: integer
-          format: int64
-          examples: [198772]
+          examples: [10, 30231]
+        productList:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
         userId:
           type: integer
           format: int32
-          examples: [7]
+          example: 7
         purchasedAt:
           type: string
           format: date-time
@@ -491,7 +638,7 @@ components:
         id:
           type: integer
           format: int64
-          examples: [1]
+          example: 2
         name:
           type: string
           examples: [Accessories]
@@ -502,18 +649,22 @@ components:
         id:
           type: integer
           format: int64
-          examples: [10]
+          example: 2
         firstName:
           type: string
-          examples: [John]
+          example: Majedah
         lastName:
           type: string
-          examples: [James]
+          example: Matar
         email:
           type: string
-          examples: [john@email.com]
+          format: email
+          example: majedahmatar@gmail.com
         password:
           type: string
-          examples: ['12345']
-
-
+          example: 12345
+      required:
+        - firstName
+        - lastName
+        - password
+        - email
